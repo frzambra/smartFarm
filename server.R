@@ -1,6 +1,5 @@
 library(shiny)
 library(tidyverse)
-library(shinydashboard)
 library(leaflet)
 library(leaflet.extras)
 library(RColorBrewer)
@@ -28,7 +27,7 @@ function(input, output, session) {
                  rendvi=3)
     
     names <- c('NDVI','NDWI','RE-NDVI')
-    img <- subset(vis_R,c(16:7,20))
+    img <- raster::subset(vis_R,c(16:7,20))
     
     colors <- rev(colorRampPalette(c("darkgreen","yellow", "darkred"))(30))
     colorsPal <- colorNumeric(colors, values(img[[op]]), na.color = "transparent")

@@ -1,5 +1,7 @@
+library(shinydashboard)
 library(highcharter)
 library(leaflet)
+library(rgdal)
 
 dashboardPage(
   dashboardHeader(title = "SmartFarm"),
