@@ -30,7 +30,7 @@ function(input, output, session) {
     img <- raster::subset(vis_R,c(16:7,20))
     
     colors <- rev(colorRampPalette(c("darkgreen","yellow", "darkred"))(30))
-    colorsPal <- colorNumeric(colors, values(img[[op]]), na.color = "transparent")
+    colorsPal <- colorNumeric(colors, raster::values(img[[op]]), na.color = "transparent")
     
     
     leaflet() %>% 
@@ -39,7 +39,7 @@ function(input, output, session) {
       #       addProviderTiles("OpenTopoMap", group = "DEM") %>%
       addTiles('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',group='Satellite') %>%
       addRasterImage(img[[op]], colors = colorsPal, opacity = 0.8,group=names[op]) %>%
-       addLegend(pal = colorsPal, values = values(img[[op]]),
+       addLegend(pal = colorsPal, values = raster::values(img[[op]]),
          title = names[op]) %>%
       addLayersControl(
         baseGroups = c("Satellite"),
@@ -70,7 +70,7 @@ function(input, output, session) {
   output$pieHC <- renderHighchart({
     pal <- colorRampPalette(brewer.pal(11,"Spectral"))(5)
     load(file='RData/RF_classes.Rdata')
-    df<-data.frame(freq(rf_raster)[1:5,1:2])
+    df<-data.frame(raster::freq(rf_raster)[1:5,1:2])
     names(df) <- c('sector','value')
     df$perc <- round(df$value*100/sum(df$value))
     highchart() %>%
